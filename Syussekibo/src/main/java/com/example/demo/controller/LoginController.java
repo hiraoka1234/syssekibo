@@ -7,19 +7,19 @@ import jakarta.servlet.http.HttpSession;
 
 public class LoginController {
 	//一覧表示用
-	@RequestMapping(path = "/mylogin", method = RequestMethod.GET)
+	@RequestMapping(path = "/login", method = RequestMethod.GET)
 	public String viewPage() {
 
-		return "mylogin";
+		return "login";
 	}
 
 	//ログイン検証用
-	@RequestMapping(path = "/mylogin", method = RequestMethod.POST)
-	public String loginPost(String username, String password, HttpSession session) {
+	@RequestMapping(path = "/login", method = RequestMethod.POST)
+	public String loginPost(String ID, String password, HttpSession session) {
 
-		session.setAttribute("username", username);
+		session.setAttribute("ID", ID);
 
-		return "redirect:/myhome";
+		return "redirect:/home";
 	}
 }
 

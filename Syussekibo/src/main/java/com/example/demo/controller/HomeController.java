@@ -10,5 +10,5 @@ public class HomeController {
 	//DBへつなぐために必要
 		@Autowired
 		JdbcTemplate jdbcTemplate;
-		@RequestMapping(path = "/myeight", method = RequestMethod.GET)
+		@RequestMapping(path = "/home", method = RequestMethod.GET)
 }

@@ -1,38 +1,25 @@
 package com.example.demo.controller;
 
-import java.beans.Statement;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+@Controller
 public class TourokuController {
-	    
-			@Autowired
-			JdbcTemplate jdbcTemplate;
-	        String url = "jdbc:mysql://localhost:3306/syussekibo";
-	        String id = "ID";
-	        String password = "PASSWORD";
-
-	        try {
-	            Connection connection = DriverManager.getConnection(url, id, password);
-	            Statement statement = connection.createStatement();
+	@Autowired
+	JdbcTemplate jdbcTemplate;
 
 	          
-	            // データベースに情報を挿入
-	            String sql = ("INSERT INTO students VALUES(?,?)",id, password);
-	            ((java.sql.Statement) statement).executeUpdate(sql);
+	//INSERT（登録）用メソッド
+		@RequestMapping(path = "/touroku", method = RequestMethod.POST)
+		public String postIns(String ID,String password) {
+			
+			jdbcTemplate.update("insert into mobpro (ID,password) value (?,?)",ID,password);
+			
 
-	            System.out.println("データベースへの登録が完了しました。");
-
-	            statement.close();
-	            connection.close();
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
-	    }
+			return "redirect:/touroku";
+		}
 	}
 
 

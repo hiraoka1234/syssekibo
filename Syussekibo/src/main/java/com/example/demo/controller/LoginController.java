@@ -12,6 +12,12 @@ public class LoginController {
 
 		return "login";
 	}
+	
+	@RequestMapping(path = "/teacherlogin", method = RequestMethod.GET)
+	public String viewPage2() {
+
+		return "teacherlogin";
+	}
 
 	//ログイン検証用
 	@RequestMapping(path = "/login", method = RequestMethod.POST)
@@ -20,6 +26,13 @@ public class LoginController {
 		session.setAttribute("ID", ID);
 
 		return "redirect:/home";
+	}
+	@RequestMapping(path = "/teacherlogin", method = RequestMethod.POST)
+	public String loginPost( String password, HttpSession session) {
+
+		session.setAttribute("password",password);
+
+		return "redirect:/teacherlogin";
 	}
 }
 

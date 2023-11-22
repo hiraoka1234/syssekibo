@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
-	    <meta charset="UTF-8">
- <link rel="stylesheet" th:href="@{/css/style.css}">
- <link rel="stylesheet" th:href="@{/css/seach.css}">
- 
-    <title>検索画面</title>
+   
+    
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <meta charset="UTF-8">
+    <title>ログイン画面</title>
 </head>
 <body>
 	
@@ -43,12 +44,15 @@
 
 </header>
 
-    <h1>生徒検索</h1>
-    <form class="form-wrapper cf">
-     <input type="text" placeholder="学籍番号を入力してください" required>
-    <button type="submit">検索</button>
-    </form>
-
-    
+    <div class="login">
+        <h1>ログイン</h1>
+        <form th:action="@{/stulogin}" method="post">
+			  <input type="text id="ID" "name="ID" placeholder="学籍番号" required="required" />
+        <input type="password" id="password" name="password" placeholder="パスワード" required="required" />
+               
+                 <button type="submit" class="btn btn-primary btn-block btn-large">ログインする</button>
+            </div>
+        </form>
+    </div>
 </body>
 </html>

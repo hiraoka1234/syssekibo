@@ -10,12 +10,20 @@ public class TourokuController {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 
-	          
+	     
+	//INSERT（登録）用メソッド
+	@RequestMapping(path = "/touroku", method = RequestMethod.GET)
+	public String postIns() {
+		
+	
+		return "touroku";
+	}
+	
 	//INSERT（登録）用メソッド
 		@RequestMapping(path = "/touroku", method = RequestMethod.POST)
 		public String postIns(String ID,String password) {
 			
-			jdbcTemplate.update("insert into mobpro (ID,password) value (?,?)",ID,password);
+			jdbcTemplate.update("insert into syussekibo (ID,password) value (?,?)",ID,password);
 			
 
 			return "redirect:/touroku";

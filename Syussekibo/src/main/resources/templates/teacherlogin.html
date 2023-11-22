@@ -5,16 +5,51 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <script src="/js/stulogin.js"></script>
     <title>教師用ログイン画面</title>
 </head>
 <body>
-    <div class="login-container">
-        <h2>ログイン</h2>
-        <form th:action="@{/teacherlogin}" method="post">
+	<header>
+  <div class="main-menu">
 
-                <label for="tpassword">パスワード:</label>
-                <input type="password" id="tpassword" name="tpassword" required>
-                <button type="submit">ログインする</button>
+    <div class="pc-menu">
+      <ul>
+      <li class="sp-menu__item"><a  class="sp-menu__link" href="./home">Home</a></li>
+      <li class="sp-menu__item"><a  class="sp-menu__link" href="./stulogin">ログイン</a></li>
+      <li class="sp-menu__item"><a  class="sp-menu__link" href="./touroku">新規登録</a></li>
+      <li class="sp-menu__item"><a  class="sp-menu__link" href="./search">検索</a></li>
+      <li class="sp-menu__item"><a  class="sp-menu__link" href="./teacherlogin">教師用ログイン</a></li>
+      </ul>
+    </div>
+    <div class="sp-menu">
+      <input type="checkbox" id="sp-menu__check">
+      <label for="sp-menu__check" class="sp-menu__box">
+        <span></span>
+      </label>
+      <div class="sp-menu__content">
+        <ul class="sp-menu__list">
+
+      <li class="sp-menu__item"><a  class="sp-menu__link" href="./home">Home</a></li>
+      <li class="sp-menu__item"><a  class="sp-menu__link" href="./stulogin">ログイン</a></li>
+      <li class="sp-menu__item"><a  class="sp-menu__link" href="./touroku">新規登録</a></li>
+      <li class="sp-menu__item"><a  class="sp-menu__link" href="./search">検索</a></li>
+      <li class="sp-menu__item"><a  class="sp-menu__link" href="./teacherlogin">教師用ログイン</a></li>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+ 
+
+</header>
+
+    <div class="login">
+        <h1>教師ログイン</h1>
+        <form th:action="@{/teacherlogin}" method="post">
+ <input type="password" id="password" name="password" placeholder="パスワード" required="required" />
+               
+                 <button type="submit" class="btn btn-primary btn-block btn-large">ログインする</button>
             </div>
         </form>
     </div>

@@ -1,10 +1,244 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>ホーム画面＾</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+       <link rel="stylesheet" th:href="@{/css/home.css}">
+       <script src="/src/main/resources/static/js/defolt.js"></script>
+<title>ホーム画面</title>
 </head>
 <body>
 
+	<header>
+  <div class="main-menu">
+
+    <div class="pc-menu">
+      <ul>
+      <li class="sp-menu__item"><a  class="sp-menu__link" href="./home">Home</a></li>
+      <li class="sp-menu__item"><a  class="sp-menu__link" href="./stulogin">ログイン</a></li>
+      <li class="sp-menu__item"><a  class="sp-menu__link" href="./touroku">新規登録</a></li>
+      <li class="sp-menu__item"><a  class="sp-menu__link" href="./search">検索</a></li>
+      <li class="sp-menu__item"><a  class="sp-menu__link" href="./teacherlogin">教師用ログイン</a></li>
+      </ul>
+    </div>
+    <div class="sp-menu">
+      <input type="checkbox" id="sp-menu__check">
+      <label for="sp-menu__check" class="sp-menu__box">
+        <span></span>
+      </label>
+      <div class="sp-menu__content">
+        <ul class="sp-menu__list">
+
+      <li class="sp-menu__item"><a  class="sp-menu__link" href="./home">Home</a></li>
+      <li class="sp-menu__item"><a  class="sp-menu__link" href="./stulogin">ログイン</a></li>
+      <li class="sp-menu__item"><a  class="sp-menu__link" href="./touroku">新規登録</a></li>
+      <li class="sp-menu__item"><a  class="sp-menu__link" href="./search">検索</a></li>
+      <li class="sp-menu__item"><a  class="sp-menu__link" href="./teacherlogin">教師用ログイン</a></li>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+ 
+
+</header>
+<main>
+	
+
+	<table border="1">
+  <tr>
+    <th class="size">理工　太郎</th>
+	<table border="1">
+  <tr>
+    <th></th>
+    <th>1回</th>
+    <th>2回</th>
+    <th>3回</th>
+    <th>4回</th>
+    <th>5回</th>
+    <th>6回</th>
+    <th>7回</th>
+    <th>8回</th>
+    <th>9回</th>
+    <th>10回</th>
+    <th>11回</th>
+    <th>12回</th>
+    <th>13回</th>
+    <th>14回</th>
+    <th>15回</th>
+  </tr>
+    <tr>
+    <th>データベース応用</th>
+    <td>〇</td>
+    <td>〇</td>
+    <td>×</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>×</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>×</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+  </tr>
+  <tr>
+    <th>React演習</th>
+    <td>〇</td>
+    <td>〇</td>
+    <td>×</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>×</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>×</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+  </tr>
+  <tr>
+    <th>デジタル法制度</th>
+    <td>〇</td>
+    <td>〇</td>
+    <td>×</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>×</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>×</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+  </tr>
+    <tr>
+    <th>Javaフレームワーク</th>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+  </tr>
+    <tr>
+  <tr>
+    <th>テスト技法</th>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+  </tr>
+  <tr>
+      <th>AI演習</th>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+  </tr>
+   <tr>
+     <th>C#演習</th>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+  </tr>
+    <tr>
+    <th>C言語検定</th>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+  </tr>
+   <tr>
+      <th>卒業制作</th>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+    <td>〇</td>
+  </tr>
+  	<table border="1">
+  <tr>
+	 <th class="sizeday">総出席日数</th>
+	 <th class="sizeday">256日</th>
+	 </tr>
+  <tr>
+	 <th class="sizeday">現在出席日数</th>
+	 <th class="sizeday">250日</th>
+	 </tr>
+  </main>
 </body>
 </html>

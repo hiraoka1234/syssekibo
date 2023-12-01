@@ -46,10 +46,11 @@
 </header>
 <div class="login">
     <h1>新規登録</h1>
-    <form action="/touroku" method="post">
+    <form th:action="@{/touroku}" method="post">
         <input type="text id="ID" "name="ID" placeholder="学籍番号" required="required" />
-        <input type="password" id="password" name="password" placeholder="パスワード" required="required" />
-               
+        <input type="text" id="name" name="name" placeholder="名前" required="required" />
+        <input type="password id="password" "name="password" placeholder="パスワード" required="required" />
+        <input type="text" id="sclass" name="sclass" placeholder="学年クラス" required="required" />              
         <button type="submit" class="btn btn-primary btn-block btn-large">登録する</button>
      
     </form>

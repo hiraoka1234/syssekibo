@@ -21,9 +21,9 @@ public class TourokuController {
 	
 	//INSERT（登録）用メソッド
 		@RequestMapping(path = "/touroku", method = RequestMethod.POST)
-		public String postIns(String ID,String password) {
+		public String postIns(int id,String name,int password,String sclass,int career,int scareer) {
 			
-			jdbcTemplate.update("insert into syussekibo (ID,password) value (?,?)",ID,password);
+			jdbcTemplate.update("insert into seito (id,name,password,sclass,career,scareer) value (?,?,?,?,?,?)",id,name,password,sclass,career,scareer);
 			
 
 			return "redirect:/touroku";

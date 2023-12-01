@@ -1,0 +1,122 @@
+@charset "UTF-8";
+.searchform {
+    display: table;
+    position: relative;
+}
+
+.searchform_button:hover {
+    cursor: pointer;
+}
+
+.searchform_check {
+    display: none;
+}
+
+.searchform_popup {
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20em;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: bottom 0.5s, opacity 0.5s;
+}
+.searchform_check:checked + .searchform_popup {
+    bottom: -100%;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.searchform_popup form {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+
+.searchform_popup input {
+    box-sizing: border-box;
+      width: 100%; 
+  margin-bottom: 10px; 
+  background: rgba(0,0,0,0.3);
+  border: none;
+  outline: none;
+  padding: 10px;
+  font-size: 13px;
+  color: #fff;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+  border: 1px solid rgba(0,0,0,0.3);
+  border-radius: 4px;
+  box-shadow: inset 0 -5px 45px rgba(100,100,100,0.2), 0 1px 1px rgba(255,255,255,0.2);
+  -webkit-transition: box-shadow .5s ease;
+  -moz-transition: box-shadow .5s ease;
+  -o-transition: box-shadow .5s ease;
+  -ms-transition: box-shadow .5s ease;
+  transition: box-shadow .5s ease;
+}
+.searchform_popup input[type="text"] {
+    padding: 0.5em 1em;
+    width: 80%;
+}
+.searchform_popup input[type="submit"] {
+    padding: 0.5em;
+    width: calc(20% - 10px);
+}
+
+.magnifying_glass {
+    display: inline-block;
+    position: relative;
+    width: 1em;
+    height: 1em;
+    color: #000;
+    font-size: 200px;
+}
+.magnifying_glass::before {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 0.7em;
+    height: 0.7em;
+    box-sizing: border-box;
+    border: 0.15em solid currentColor;
+    border-radius: 50%;
+    background-color: #fff;
+    content: "";
+}
+.magnifying_glass::after {
+    position: absolute;
+    top: 0px;
+    left: 50%;
+    z-index: -1;
+    transform: rotate(-45deg);
+    width: 0.15em;
+    height: 1em;
+    box-sizing: border-box;
+    background-color: currentColor;
+    content: "";
+}
+.letter01 {
+  display: inline-block;
+  position: relative;
+}
+.letter01::after {
+  content: '編集'; /* 入れたい文字  */
+  position: absolute;
+  top: 100%; /* 文字の場所 */
+  left: 100%; /* 文字の場所 */
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  color: #fff; /* 文字の色 */
+  font-size: 370%; /* 文字のサイズ */
+  font-weight: bold;
+  text-shadow: 0 0 10px #00000073;
+}
+.letter01 img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}

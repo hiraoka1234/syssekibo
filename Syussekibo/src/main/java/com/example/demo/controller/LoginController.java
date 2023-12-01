@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import jakarta.servlet.http.HttpSession;
-@Controller
 
+@Controller
 public class LoginController {
 	
 	@Autowired
@@ -31,11 +31,12 @@ public class LoginController {
 
 		session.setAttribute("ID", ID);
 
+		System.out.println(ID);
 		return "redirect:/home";
 	}
 	@RequestMapping(path = "/teacherlogin", method = RequestMethod.POST)
 	public String loginPost( String password, HttpSession session) {
-
+		
 		session.setAttribute("password",password);
 
 		return "redirect:/teacherlogin";

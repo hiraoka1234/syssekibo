@@ -29,7 +29,10 @@ public class HomeController {
 			
 			List<Map<String, Object>>resultList;
 			
-			resultList=jdbcTemplate.queryForList("SELECT * FROM seito");
+			resultList=jdbcTemplate.queryForList("SELECT seito.id, seito.name, kaisu.subjectid, kaisu.frequency, kaisu.status, kamoku.subject\n"
+					+ "FROM seito\n"
+					+ "LEFT JOIN kaisu ON seito.id = kaisu.id\n"
+					+ "LEFT JOIN kamoku ON kaisu.subjectid = kamoku.subjectid;");
 			
 			model.addAttribute("selectResult",resultList);
 					

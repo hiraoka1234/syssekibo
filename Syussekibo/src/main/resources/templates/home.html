@@ -103,11 +103,19 @@
 
 </header>
 <main>
+	<table border="1">
+		<tr th:each="syusseki : ${selectResult}">
+			<td th:text="${syusseki.subject}"></td>
+			<td th:text="${syusseki.kaisu}"></td>
+			<td th:text="${syusseki.status}"></td>
 
+		</tr>
+	</table>
 
 	<table class ="table"border="1">
   <tr>
     <th class="size">理工　太郎</th>
+    	</table>
 	<table border="1">
   <tr>
     <th></th>

@@ -103,14 +103,22 @@
 
 </header>
 <main>
-	<table border="1">
-		<tr th:each="syusseki : ${selectResult}">
-			<td th:text="${syusseki.subject}"></td>
-			<td th:text="${syusseki.kaisu}"></td>
-			<td th:text="${syusseki.status}"></td>
-
-		</tr>
-	</table>
+		<table class ="table"border="1">
+  
+    
+ 	<th  class="size" th:text="${selectResult[0].name}"></th>
+    	</table>
+    	
+		<table class ="table"border="1">
+      <th></th>
+		<th  th:each="kaisu : ${selectResult3}" th:text="${kaisu.frequency}">"回"</th>
+	
+ 		<tr th:each="syusseki : ${selectResult}">
+		<th th:each="kamoku : ${selectResult}" th:text="${kamoku.subject}"></th>
+ 		
+ 		<td th:text="${syusseki.status}"></td>
+ 		</tr>
+    	</table>
 
 	<table class ="table"border="1">
   <tr>
@@ -821,7 +829,19 @@
   	 <tr>
 		 
 	 </tr>
+	 </table>
  <br>
+   	<table class ="table"border="2">
+  <tr th:each="syusseki : ${selectResult}">
+	 <th class="sizeday">出席予定日数</th>
+	 <th class="sizeday" th:text="${syusseki.career}">日</th >
+	 </tr th:each="syusseki : ${selectResult}">
+  <tr th:each="syusseki : ${selectResult}">
+	 <th class="sizeday">現在出席日数</th>
+	 <th  class="sizeday" th:text="${syusseki.scareer}">日</th>
+	 </tr>
+	</table>
+	 <br>
   	<table class ="table"border="2">
   <tr>
 	 <th class="sizeday">出席予定日数</th>
@@ -831,6 +851,7 @@
 	 <th class="sizeday">現在出席日数</th>
 	 <th class="sizeday">247日</th>
 	 </tr>
+	 </table>
 	  <br>
 	  	<form th:action="@{/home}" method="post">
       <input type="text" id="kmoname" name="ID" placeholder="科目名"  /><br>

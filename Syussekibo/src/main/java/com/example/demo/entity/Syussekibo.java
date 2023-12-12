@@ -18,8 +18,8 @@ public class Syussekibo {
 	@Column(name = "password")
 	private String password;
 
-	@Column(name = "idsubject")
-	private String idsubject;
+	@Column(name = "subjectid")
+	private String subjectid;
 
 	@Column(name = "subject")
 	private String subject;
@@ -38,14 +38,10 @@ public class Syussekibo {
 
 	@Column(name = "scareer")
 	private String scareer;
+	
 
-	public String getIdsubject() {
-		return idsubject;
-	}
 
-	public void setIdsubject(String idsubject) {
-		this.idsubject = idsubject;
-	}
+
 
 	public String getSubject() {
 		return subject;

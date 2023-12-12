@@ -25,19 +25,25 @@ public class HomeController {
 
 	//一覧表示用
 		@RequestMapping(path = "/home", method = RequestMethod.GET)
-		public String viewPage(Model model) {
+		public String viewPage(Model model,Model model2) {
 			
 			List<Map<String, Object>>resultList;
 			
-			resultList=jdbcTemplate.queryForList("SELECT seito.id, seito.name, kaisu.subjectid, kaisu.frequency, kaisu.status, kamoku.subject\n"
-					+ "FROM seito\n"
-					+ "LEFT JOIN kaisu ON seito.id = kaisu.id\n"
-					+ "LEFT JOIN kamoku ON kaisu.subjectid = kamoku.subjectid;");
+			resultList=jdbcTemplate.queryForList("SELECT seito.id, seito.name, seito.career, seito.scareer ,kaisu.subjectid, kaisu.frequency, kaisu.status, kamoku.subject "
+					+ "FROM seito "
+					+ "LEFT JOIN kaisu ON seito.id = kaisu.id "
+					+ "LEFT JOIN kamoku ON kaisu.subjectid = kamoku.subjectid "
+					+ "ORDER BY kaisu.subjectid ASC ,kaisu.frequency ASC;");
 			
 			model.addAttribute("selectResult",resultList);
-					
-
+			
+			List<Map<String, Object>> kamokuList = jdbcTemplate.queryForList("SELECT  DISTINCT subjectid,subject FROM kamoku ");
+			
+			model.addAttribute("selectResult2",kamokuList);
 	        
+			List<Map<String, Object>> kaisuList = jdbcTemplate.queryForList("SELECT DISTINCT id, frequency FROM kaisu ORDER BY frequency ASC;");
+			
+			model.addAttribute("selectResult3",kaisuList);
 
 			return "home";
 		}

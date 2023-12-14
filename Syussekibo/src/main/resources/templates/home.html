@@ -1,871 +1,174 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" th:href="@{/css/style.css}">
-      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
+	<meta charset="UTF-8">
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+		integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<link rel="stylesheet" th:href="@{/css/home.css}">
+	<link rel="stylesheet" th:href="@{/css/home2.css}">
+
+
+
+
+	<script src="/src/main/resources/static/js/defolt.js"></script>
+	<script src="/src/main/resources/static/js/geolocation.js"></script>
+	<title>ホーム画面</title>
 </head>
+
 <body>
-  
-        <div class="btn-margin">
+
+	<div class="btn-margin">
 		<form th:action="@{/home}" method="POST">
 			<input type="hidden" id="latitude" name="latitude">
 			<input type="hidden" id="longitude" name="longitude">
-			<input type="submit" value="出席する"class="btn btn-outline-primary btn-lg">
-         </form>
-        </div>
+			<input type="submit" value="出席する" class="btn btn-outline-primary btn-lg">
+		</form>
+	</div>
 
-  
-    <script src="geolocation.js"></script>
-</body>
-</html>
-       <link rel="stylesheet" th:href="@{/css/home.css}">
-       <link rel="stylesheet" th:href="@{/css/home2.css}">
-       <script src="/src/main/resources/static/js/defolt.js"></script>
-       <script src="/src/main/resources/static/js/geolocation.js"></script> 
-<title>ホーム画面</title>
-</head>
-<body>
-<script type="text/javascript">
-  if (navigator.geolocation) {
 
-    // 現在の位置情報を取得
-    navigator.geolocation.getCurrentPosition(
+	<script src="geolocation.js"></script>
 
-      // （1）位置情報の取得に成功した場合
-      function (pos) {
-        var location ="<li>"+"緯度：" + pos.coords.latitude + "</li>";
-        location += "<li>"+"経度：" + pos.coords.longitude + "</li>";
-        document.getElementById("latitude").value=pos.coords.latitude;
-        document.getElementById("longitude").value=pos.coords.longitude;
-              document.getElementById("location").innerHTML = location;
-      },
-      // （2）位置情報の取得に失敗した場合
-      function (error) {
-        var message = "";
+	<script type="text/javascript">
+		if (navigator.geolocation) {
 
-        switch (error.code) {
+			// 現在の位置情報を取得
+			navigator.geolocation.getCurrentPosition(
 
-          // 位置情報が取得できない場合
-          case error.POSITION_UNAVAILABLE:
-            message = "位置情報の取得ができませんでした。";
-            break;
+				// （1）位置情報の取得に成功した場合
+				function (pos) {
+					var location = "<li>" + "緯度：" + pos.coords.latitude + "</li>";
+					location += "<li>" + "経度：" + pos.coords.longitude + "</li>";
+					document.getElementById("latitude").value = pos.coords.latitude;
+					document.getElementById("longitude").value = pos.coords.longitude;
+					document.getElementById("location").innerHTML = location;
+				},
+				// （2）位置情報の取得に失敗した場合
+				function (error) {
+					var message = "";
 
-          // Geolocationの使用が許可されない場合
-          case error.PERMISSION_DENIED:
-            message = "位置情報取得の使用許可がされませんでした。";
-            break;
+					switch (error.code) {
 
-          // タイムアウトした場合
-          case error.PERMISSION_DENIED_TIMEOUT:
-            message = "位置情報取得中にタイムアウトしました。";
-            break;
-        }
-        window.alert(message);
-      }
-    );
-  } else {
-    window.alert("本ブラウザではGeolocationが使えません");
-  }
-</script>
+						// 位置情報が取得できない場合
+						case error.POSITION_UNAVAILABLE:
+							message = "位置情報の取得ができませんでした。";
+							break;
+
+						// Geolocationの使用が許可されない場合
+						case error.PERMISSION_DENIED:
+							message = "位置情報取得の使用許可がされませんでした。";
+							break;
+
+						// タイムアウトした場合
+						case error.PERMISSION_DENIED_TIMEOUT:
+							message = "位置情報取得中にタイムアウトしました。";
+							break;
+					}
+					window.alert(message);
+				}
+			);
+		} else {
+			window.alert("本ブラウザではGeolocationが使えません");
+		}
+	</script>
 	<header>
-  <div class="main-menu">
+		<div class="main-menu">
 
-    <div class="pc-menu">
-      <ul>
-      <li class="sp-menu__item"><a  class="sp-menu__link" href="./home">Home</a></li>
-      <li class="sp-menu__item"><a  class="sp-menu__link" href="./stulogin">ログイン</a></li>
-      <li class="sp-menu__item"><a  class="sp-menu__link" href="./touroku">新規登録</a></li>
-      <li class="sp-menu__item"><a  class="sp-menu__link" href="./search">検索</a></li>
-      <li class="sp-menu__item"><a  class="sp-menu__link" href="./teacherlogin">教師用ログイン</a></li>
-      </ul>
-    </div>
-    <div class="sp-menu">
-      <input type="checkbox" id="sp-menu__check">
-      <label for="sp-menu__check" class="sp-menu__box">
-        <span></span>
-      </label>
-      <div class="sp-menu__content">
-        <ul class="sp-menu__list">
+			<div class="pc-menu">
+				<ul>
+					<li class="sp-menu__item"><a class="sp-menu__link" href="./home">Home</a></li>
+					<li class="sp-menu__item"><a class="sp-menu__link" href="./stulogin">ログイン</a></li>
+					<li class="sp-menu__item"><a class="sp-menu__link" href="./touroku">新規登録</a></li>
+					<li class="sp-menu__item"><a class="sp-menu__link" href="./search">検索</a></li>
+					<li class="sp-menu__item"><a class="sp-menu__link" href="./teacherlogin">教師用ログイン</a></li>
+				</ul>
+			</div>
+			<div class="sp-menu">
+				<input type="checkbox" id="sp-menu__check">
+				<label for="sp-menu__check" class="sp-menu__box">
+					<span></span>
+				</label>
+				<div class="sp-menu__content">
+					<ul class="sp-menu__list">
 
-      <li class="sp-menu__item"><a  class="sp-menu__link" href="./home">Home</a></li>
-      <li class="sp-menu__item"><a  class="sp-menu__link" href="./stulogin">ログイン</a></li>
-      <li class="sp-menu__item"><a  class="sp-menu__link" href="./touroku">新規登録</a></li>
-      <li class="sp-menu__item"><a  class="sp-menu__link" href="./search">検索</a></li>
-      <li class="sp-menu__item"><a  class="sp-menu__link" href="./teacherlogin">教師用ログイン</a></li>
+						<li class="sp-menu__item"><a class="sp-menu__link" href="./home">Home</a></li>
+						<li class="sp-menu__item"><a class="sp-menu__link" href="./stulogin">ログイン</a></li>
+						<li class="sp-menu__item"><a class="sp-menu__link" href="./touroku">新規登録</a></li>
+						<li class="sp-menu__item"><a class="sp-menu__link" href="./search">検索</a></li>
+						<li class="sp-menu__item"><a class="sp-menu__link" href="./teacherlogin">教師用ログイン</a></li>
 
-        </ul>
-      </div>
-    </div>
-  </div>
- 
+					</ul>
+				</div>
+			</div>
+		</div>
 
-</header>
-<main>
-		<table class ="table"border="1">
-  
-    
- 	<th  class="size" th:text="${selectResult[0].name}"></th>
-    	</table>
-    	
-		<table class ="table"border="1">
-      <th></th>
-		<th  th:each="kaisu : ${selectResult3}" th:text="${kaisu.frequency}">"回"</th>
-	
- 		<tr th:each="syusseki : ${selectResult}">
-		<th th:each="kamoku : ${selectResult}" th:text="${kamoku.subject}"></th>
- 		
- 		<td th:text="${syusseki.status}"></td>
- 		</tr>
-    	</table>
 
-	<table class ="table"border="1">
-  <tr>
-    <th class="size">理工　太郎</th>
-    	</table>
-	<table border="1">
-  <tr>
-    <th></th>
-    <th>01回</th>
-    <th>02回</th>
-    <th>03回</th>
-    <th>04回</th>
-    <th>05回</th>
-    <th>06回</th>
-    <th>07回</th>
-    <th>08回</th>
-    <th>09回</th>
-    <th>10回</th>
-    <th>11回</th>
-    <th>12回</th>
-    <th>13回</th>
-    <th>14回</th>
-    <th>15回</th>
-    <th>16回</th>
-    <th>17回</th>
-    <th>18回</th>
-    <th>19回</th>
-    <th>20回</th>
-    <th>21回</th>
-    <th>22回</th>
-    <th>23回</th>
-    <th>24回</th>
-    <th>25回</th>
-    <th>26回</th>
-    <th>27回</th>
-    <th>28回</th>
-    <th>29回</th>
-    <th>30回</th>
-	<th>31回</th>
-    <th>32回</th>
-    <th>33回</th>
-    <th>34回</th>
-    <th>35回</th>
-    <th>36回</th>
-    <th>37回</th>
-    <th>38回</th>
-    <th>39回</th>
-    <th>40回</th>
-    <th>41回</th>
-    <th>42回</th>
-    <th>43回</th>
-    <th>44回</th>
-    <th>45回</th>
-    <th>46回</th>
-    <th>47回</th>
-    <th>48回</th>
-    <th>49回</th>
-    <th>50回</th>
-    <th>51回</th>
-    <th>52回</th>
-    <th>53回</th>
-    <th>54回</th>
-    <th>55回</th>
-    <th>56回</th>
-    <th>57回</th>
-    <th>58回</th>
-    <th>59回</th>
-    <th>60回</th>
-    <th>61回</th>
-    <th>62回</th>
-    <th>63回</th>
-    <th>64回</th>
-    <th>65回</th>
-    <th>66回</th>
-    <th>67回</th>
-  </tr>
-    <tr>
-    <th>データベース応用</th>
-    <td>〇</td>
-    <td>〇</td>
-    <td>×</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>×</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>×</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-  </tr>
-  <tr>
-    <th>React演習</th>
-	<td>〇</td>
-    <td>〇</td>
-    <td>×</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>×</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>×</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-  </tr>
-  <tr>
-    <th>デジタル法制度</th>
-    <td>〇</td>
-    <td>〇</td>
-    <td>×</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>×</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>×</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-  </tr>
-    <tr>
-    <th>Javaフレームワーク</th>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-  </tr>
-    <tr>
-  <tr>
-    <th>テスト技法</th>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-  </tr>
-  <tr>
-      <th>AI演習</th>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-  </tr>
-   <tr>
-     <th>C#演習</th>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-  </tr>
-    <tr>
-    <th>C言語検定</th>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-  </tr>
-   <tr>
-      <th>卒業制作</th>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-    <td>〇</td>
-  </tr>
-  	 <tr>
-		 
-	 </tr>
-	 </table>
- <br>
-   	<table class ="table"border="2">
-  <tr th:each="syusseki : ${selectResult}">
-	 <th class="sizeday">出席予定日数</th>
-	 <th class="sizeday" th:text="${syusseki.career}">日</th >
-	 </tr th:each="syusseki : ${selectResult}">
-  <tr th:each="syusseki : ${selectResult}">
-	 <th class="sizeday">現在出席日数</th>
-	 <th  class="sizeday" th:text="${syusseki.scareer}">日</th>
-	 </tr>
-	</table>
-	 <br>
-  	<table class ="table"border="2">
-  <tr>
-	 <th class="sizeday">出席予定日数</th>
-	 <th class="sizeday">250日</th>
-	 </tr>
-  <tr>
-	 <th class="sizeday">現在出席日数</th>
-	 <th class="sizeday">247日</th>
-	 </tr>
-	 </table>
-	  <br>
-	  	<form th:action="@{/home}" method="post">
-      <input type="text" id="kmoname" name="ID" placeholder="科目名"  /><br>
-       <input type="text"id="kaisu" name="ID" placeholder="授業回数"  /><br>
-        <input type="text" id="stetas" name="ID"  placeholder="ステータス" /><br>
-        
-        <button type="submit">更新する</button>
-       </form>
- 
+	</header>
+	<main>
+		<table class="table" border="1">
 
-  
-   </main> 
+			<tr>
+				<th class="size" th:text="${selectResult[0].name}"></th>
+			</tr>
+		</table>
+		<table class="table" border="1">
 
-     
+			<tr>
+				<th></th>
+				<th th:each="kaisu : ${selectResult3}" th:text="第0+${kaisu.frequency}+ 回">"回"</th>
+			</tr>
+
+			<tr th:each="syusseki, iterStat : ${selectResult}">
+				<!-- 最初の行か、前の行の科目と違う場合は改行 -->
+				<p th:text="${iterStat.index}"></p>
+				<p th:text="${syusseki.subject}"></p>
+				<p th:text="${iterStat.index - 1}"></p>
+				
+				<th th:if="${iterStat.index == 0 or selectResult[iterStat.index - 1].subject != syusseki.subject}"
+					th:text="${syusseki.subject}"></th>
+				<td th:text="${syusseki.status}"
+					th:if="${iterStat.index == 0 or selectResult[iterStat.index - 1].subject != syusseki.subject}"></td>
+				<td th:text="${syusseki.status}"
+					th:unless="${iterStat.index == 0 or selectResult[iterStat.index - 1].subject != syusseki.subject}">
+				</td>
+			</tr>
+
+
+		</table>
+
+
+
+		<br>
+		<table class="table" border="2">
+			<tr>
+				<th class="sizeday">出席予定日数</th>
+				<th class="sizeday" th:text="${selectResult[0].career}+日"></th>
+			</tr>
+			<tr>
+				<th class="sizeday">現在出席日数</th>
+				<th class="sizeday" th:text="${selectResult[0].scareer}+日"></th>
+			</tr>
+
+		</table>
+		<br>
+
+		<br>
+		<form th:action="@{/home}" method="post">
+			<input type="text" id="kmoname" name="ID" placeholder="科目名" /><br>
+			<input type="text" id="kaisu" name="ID" placeholder="授業回数" /><br>
+			<input type="text" id="stetas" name="ID" placeholder="ステータス" /><br>
+
+			<button type="submit">更新する</button>
+		</form>
+
+
+
+	</main>
+
+
 </body>
 
 </html>

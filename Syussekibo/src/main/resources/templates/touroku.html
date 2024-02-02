@@ -19,7 +19,7 @@
       <li class="sp-menu__item"><a  class="sp-menu__link" href="./home">Home</a></li>
       <li class="sp-menu__item"><a  class="sp-menu__link" href="./stulogin">ログイン</a></li>
       <li class="sp-menu__item"><a  class="sp-menu__link" href="./touroku">新規登録</a></li>
-      <li class="sp-menu__item"><a  class="sp-menu__link" href="./search">検索</a></li>
+  
       <li class="sp-menu__item"><a  class="sp-menu__link" href="./teacherlogin">教師用ログイン</a></li>
       </ul>
     </div>
@@ -34,7 +34,7 @@
       <li class="sp-menu__item"><a  class="sp-menu__link" href="./home">Home</a></li>
       <li class="sp-menu__item"><a  class="sp-menu__link" href="./stulogin">ログイン</a></li>
       <li class="sp-menu__item"><a  class="sp-menu__link" href="./touroku">新規登録</a></li>
-      <li class="sp-menu__item"><a  class="sp-menu__link" href="./search">検索</a></li>
+      
       <li class="sp-menu__item"><a  class="sp-menu__link" href="./teacherlogin">教師用ログイン</a></li>
 
         </ul>
@@ -47,11 +47,13 @@
 <div class="login">
     <h1>新規登録</h1>
     <form th:action="@{/touroku}" method="post">
-        <input type="text id="ID" "name="ID" placeholder="学籍番号" required="required" />
-        <input type="text" id="name" name="name" placeholder="名前" required="required" />
-        <input type="password id="password" "name="password" placeholder="パスワード" required="required" />
-        <input type="text" id="sclass" name="sclass" placeholder="学年クラス" required="required" />              
-        <button type="submit" class="btn btn-primary btn-block btn-large">登録する</button>
+        <input type="text" id="id" name="id" placeholder="学籍番号" required="required" maxlength="7" />
+    	<input type="text" id="name" name="name" placeholder="名前" required="required" />
+    	<input type="password" id="password" name="password" placeholder="パスワード" required="required" />
+    	<input type="text" id="sclass" name="sclass" placeholder="学年クラス" required="required" />
+    	<input type="hidden" id="career" name="career" value="0">
+		<input type="hidden" id="scareer" name="scareer" value="0">
+    	<button type="submit" class="btn btn-primary btn-block btn-large">登録する</button>
      
     </form>
      </div>

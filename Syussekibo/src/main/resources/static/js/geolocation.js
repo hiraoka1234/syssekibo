@@ -4,6 +4,8 @@ document.getElementById("btn").onclick = function(){
     navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
 };
 
+
+
 // 取得に成功した場合の処理
 function successCallback(position){
     // 緯度を取得し画面に表示
@@ -12,6 +14,9 @@ function successCallback(position){
     // 経度を取得し画面に表示
     var longitude = position.coords.longitude;
     document.getElementById("longitude").innerHTML = longitude;
+    // 緯度・経度の精度を取得し画面に表示
+     var accuracy = position.coords.accuracy;
+    document.getElementById("accuracy").innerHTML = accuracy;
 };
 
 // 取得に失敗した場合の処理

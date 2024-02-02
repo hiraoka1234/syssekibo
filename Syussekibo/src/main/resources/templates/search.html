@@ -35,7 +35,7 @@
       <li class="sp-menu__item"><a  class="sp-menu__link" href="./search">検索</a></li>
       <li class="sp-menu__item"><a  class="sp-menu__link" href="./teacherlogin">教師用ログイン</a></li>
 
-        </ul>
+        </ul>	
       </div>
     </div>
   </div>
@@ -44,10 +44,27 @@
 </header>
 
     <h1>生徒検索</h1>
-    <form class="form-wrapper cf">
-     <input type="text" placeholder="学籍番号を入力してください" required>
-    <button type="submit">検索</button>
+    <form class="form-wrapper cf" th:action="@{/search}"method="post">
+    <input type="text" id="id" name="id" placeholder="学籍番号を入力してください" required = "required" />
+    <button type="submit" class="btn btn-primary btn-block btn-large">検索</button>
     </form>
+    
+    <script type="text/javascript">
+    function ID() {
+        // IDが "id" の要素の値を取得
+        var idValue = document.getElementById("id").value;
+
+        // 現在のURLを取得
+        var currentUrl = window.location.href;
+
+        // 新しいURLにIDを追加
+        var newUrl = currentUrl + "?id=" + idValue;
+
+        // 新しいURLにリダイレクト
+        window.location.href = newUrl;
+    }
+</script>
+
 
     
 </body>

@@ -1,5 +1,8 @@
 package com.example.demo.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
@@ -15,31 +18,30 @@ public class LoginController {
 	JdbcTemplate jdbcTemplate;
 	//一覧表示用
 	@RequestMapping(path = "/stulogin", method = RequestMethod.GET)
-	public String viewPage() {
+	public String viewPage(String id,String password) {
 		
+	
 		return "stulogin";
-	}
-	@RequestMapping(path = "/teacherlogin", method = RequestMethod.GET)
-	public String viewPage2() {
-
-		return "teacherlogin";
 	}
 
 	//ログイン検証用
 	@RequestMapping(path = "/stulogin", method = RequestMethod.POST)
-	public String loginPost(String ID, String password, HttpSession session) {
-
-		session.setAttribute("ID", ID);
-
-		System.out.println(ID);
-		return "redirect:/home";
-	}
-	@RequestMapping(path = "/teacherlogin", method = RequestMethod.POST)
-	public String loginPost( String password, HttpSession session) {
+	public String loginPost(String id, String password, HttpSession session) {
 		
-		session.setAttribute("password",password);
+		 List<Map<String, Object>> resultList;
+		    
+		    // IDとパスワードの両方を条件とするSQLクエリを実行
+		 resultList = jdbcTemplate.queryForList("SELECT * FROM seito WHERE id = ? AND password = ?",id, password);
+		    
+		    session.setAttribute("resultList", resultList);
+		    System.out.print(resultList);
 
-		return "redirect:/teacherlogin";
+		    if (!resultList.isEmpty()) {
+		    	session.setAttribute("fromLogin", true);
+		    	session.setAttribute("userId",id);
+		        return "redirect:/home";
+		    } else {
+		        return "redirect:/stulogin";
+		    }
 	}
 }
-

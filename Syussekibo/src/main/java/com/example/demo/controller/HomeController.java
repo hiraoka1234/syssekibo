@@ -46,10 +46,7 @@ public class HomeController {
 	private int fre3 = 0;
 	private int hikakufre;
 	private int hikakufre2;
-	private int hikakufre3;
-	private int count = 0;
-	private int count2 = 0;
-	private int count3 = 0;
+	private int hikakufre3;;
 	private int stack = 0;
 	private String sb;
 	private String sb2;
@@ -217,7 +214,7 @@ public class HomeController {
 							status = "×";
 
 							fre++;
-							jdbcTemplate.update("insert into kaisu (id,subjectid,kaisu,status) value (?,?,?,?)",id,sbid,fre,status);
+							jdbcTemplate.update("insert into kaisu (id,subjectid,subject,kaisu,status) value (?,?,?,?)", id, sbid,sb,fre, status);
 						}
 
 
@@ -265,7 +262,7 @@ public class HomeController {
 							status2 = "×";
 
 							fre2++;
-							jdbcTemplate.update("insert into kaisu(id,subjectid,kaisu,status) value (?,?,?,?)",id,sbid2,fre,status);
+							jdbcTemplate.update("insert into kaisu (id,subjectid,subject,kaisu,status) value (?,?,?,?)", id, sbid2,sb2,fre2, status2);
 						}
 
 
@@ -305,7 +302,7 @@ public class HomeController {
 							status3 = "×";
 
 							fre3++;
-							jdbcTemplate.update("insert into kaisu(id,subjectid,kaisu,status) value (?,?,?,?)",id,sbid3,fre,status3);
+							jdbcTemplate.update("insert into kaisu (id,subjectid,subject,kaisu,status) value (?,?,?,?)", id, sbid3,sb3,fre3, status3);
 						}
 
 
@@ -351,15 +348,15 @@ public class HomeController {
 
 			switch(stack){
 			case 1:
-				jdbcTemplate.update("insert into kaisu (id,subjectid,kaisu,status) value (?,?,?,?)", id, sbid,fre, status);
+				jdbcTemplate.update("insert into kaisu (id,subjectid,subject,kaisu,status) value (?,?,?,?)", id, sbid,sb,fre, status);
 				stack = 4;
 				break;
 			case 2:
-				jdbcTemplate.update("insert into kaisu (id,subjectid,kaisu,status) value (?,?,?,?)", id, sbid2,fre2, status);
+				jdbcTemplate.update("insert into kaisu (id,subjectid,subject,kaisu,status) value (?,?,?,?)", id, sbid2,sb2,fre2, status2);
 				stack = 5;
 				break;
 			case 3:
-				jdbcTemplate.update("insert into kaisu (id,subjectid,kaisu,status) value (?,?,?,?)", id, sbid3,fre3, status);
+				jdbcTemplate.update("insert into kaisu (id,subjectid,subject,kaisu,status) value (?,?,?,?)", id, sbid3,sb3,fre3, status3);
 				break;
 			}
 		}

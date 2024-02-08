@@ -34,27 +34,32 @@ public class HomeController {
 	Calendar cl = Calendar.getInstance();
 	SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMMddHHmm");
 	String record = sdf2.format(cl.getTime());
-	Calendar cl2 = Calendar.getInstance();
+	SimpleDateFormat sdf4 = new SimpleDateFormat("yyyyMMdd");
+	String data = sdf4.format(cl.getTime());
+
 	SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy/MM/dd");
-	String time = sdf3.format(cl2.getTime());
+	String time = sdf3.format(cl.getTime());
 	//    HomeController date = new HomeController();
 	private int sbid;
 	private int sbid2;
 	private int sbid3;
-	private int fre = 0;
-	private int fre2 = 0;
-	private int fre3 = 0;
+	private int fre;
+	private int fre2;
+	private int fre3;
 	private int hikakufre;
 	private int hikakufre2;
 	private int hikakufre3;;
 	private int stack = 0;
+	private int count = 0;
+	private int count2 = 0;
+	private int count3 = 0;
 	private String sb;
 	private String sb2;
 	private String sb3;
 	private String status = "×";
 	private String status2 = "×";
 	private String status3 = "×";
-	private String id;
+	
 
 
 
@@ -184,6 +189,7 @@ public class HomeController {
 		}
 
 
+
 		///ここまでが曜日取得プログラム
 
 		///ここから定期実行一限目
@@ -193,46 +199,65 @@ public class HomeController {
 
 			@Override
 			public void run() {
+				if (dayOfWeek <= 6 && dayOfWeek >1){
+					List<Map<String, Object>> tuikaList = jdbcTemplate.queryForList("SELECT id, subjectid, MAX(frequency) AS fre FROM kaisu WHERE id = ? AND subjectid = ?;",id,sbid);
+					model.addAttribute("tuikaList",tuikaList);
+					List<Map<String, Object>> tuikaList2 = jdbcTemplate.queryForList("SELECT id, subjectid, MAX(frequency) AS fre2 FROM kaisu WHERE id = ? and subjectid = ?;",id,sbid2);
+					model.addAttribute("tuikaList2",tuikaList2);
+					List<Map<String, Object>> tuikaList3 = jdbcTemplate.queryForList("SELECT id, subjectid, MAX(frequency) AS fre3 FROM kaisu WHERE id = ? and subjectid = ?;",id,sbid3);
+					model.addAttribute("tuikaList3",tuikaList3);
+					List<Map<String, Object>> hikakuList = jdbcTemplate.queryForList("SELECT subjectid, MAX(frequency) AS hikakufre FROM kaisu WHERE subjectid = ?;",sbid);
+					model.addAttribute("hikakuList",hikakuList);
+					List<Map<String, Object>> hikakuList2 = jdbcTemplate.queryForList("SELECT subjectid, MAX(frequency) AS hikakufre2 FROM kaisu WHERE subjectid = ?;",sbid2);
+					model.addAttribute("hikakuList2",hikakuList2);
+					List<Map<String, Object>> hikakuList3 = jdbcTemplate.queryForList("SELECT subjectid, MAX(frequency) AS hikakufre3 FROM kaisu WHERE subjectid = ?;",sbid3);
+					model.addAttribute("hikakuList3",hikakuList3);
+					System.out.println(tuikaList.get(0).get("fre") );
+					System.out.println(tuikaList2.get(0).get("fre2")  );
+					System.out.println(tuikaList3.get(0).get("fre3")  );
+					System.out.println(hikakuList.get(0).get("hikakufre")  );
+					System.out.println(hikakuList2.get(0).get("hikakufre2")  );
+					System.out.println(hikakuList3.get(0).get("hikakufre3")  );
+					fre = (int) tuikaList.get(0).get("fre");
+					fre2 = (int) tuikaList2.get(0).get("fre2");
+					fre3 = (int) tuikaList3.get(0).get("fre3");
+					hikakufre =  (int) hikakuList.get(0).get("hikakuList");
+					hikakufre2 = (int) hikakuList2.get(0).get("hikakuList2");
+					hikakufre3 = (int) hikakuList3.get(0).get("hikakuList3");
+					
+
+					
+				}
 				//10時より前の時間だったら実行
-				if(record.compareTo(time + "10:00:00") >= 0) {
-					System.out.println("実行しない");
+				if(record.compareTo(data + "100000") >= 0) {
+					System.out.println("1限実行しない");
 				}else {
 					if (dayOfWeek <= 6 && dayOfWeek >1){
-						List<Map<String, Object>> tuikaList = jdbcTemplate.queryForList("SELECT id, subjectid, MAX(frequency) as fre FROM kaisu WHERE id = ? and subjectid = ?",id,sbid);
-						model.addAttribute("selectResult5",tuikaList);
-						List<Map<String, Object>> tuikaList2 = jdbcTemplate.queryForList("SELECT id, subjectid, MAX(frequency) as fre2 FROM kaisu WHERE id = ? and subjectid = ?",id,sbid2);
-						model.addAttribute("selectResult6",tuikaList2);
-						List<Map<String, Object>> tuikaList3 = jdbcTemplate.queryForList("SELECT id, subjectid, MAX(frequency) as fre3 FROM kaisu WHERE id = ? and subjectid = ?",id,sbid3);
-						model.addAttribute("selectResult7",tuikaList3);
-						List<Map<String, Object>> hikakuList = jdbcTemplate.queryForList("SELECT id, subjectid, MAX(frequency) as hikakufre FROM kaisu subjectid = ?",sbid);
-						model.addAttribute("selectResult8",hikakuList);
-						List<Map<String, Object>> hikakuList2 = jdbcTemplate.queryForList("SELECT id, subjectid, MAX(frequency) as hikakufre2 FROM kaisu subjectid = ?",sbid2);
-						model.addAttribute("selectResult9",hikakuList2);
-						List<Map<String, Object>> hikakuList3 = jdbcTemplate.queryForList("SELECT id, subjectid, MAX(frequency) as hikakufre3 FROM kaisu subjectid = ?",sbid3);
-						model.addAttribute("selectResult105",hikakuList3);
+
 						for(int i = fre;i < hikakufre ;i++)	{
 							status = "×";
 
 							fre++;
-							jdbcTemplate.update("insert into kaisu (id,subjectid,subject,kaisu,status) value (?,?,?,?)", id, sbid,sb,fre, status);
+							jdbcTemplate.update("insert into kaisu (id,subjectid,subject,frequency,status) value (?,?,?,?,?)", id, sbid,sb,fre, status);
 						}
 
 
 					}   
-					
-					if(stack == 0) {
-						
+
+					if(stack == 0 && count == 0) {
+						System.out.println("1限出席");
 						fre++;
+						
 						stack = 1;
 					}
-					
+
 					System.out.println("実行済み");
 					System.out.println(fre );
 					System.out.println(id );
 					System.out.println(status );
 					System.out.println("1限は" + sbid + sb );
 
-					
+
 
 
 
@@ -254,21 +279,22 @@ public class HomeController {
 
 			@Override
 			public void run() {
-				if(record.compareTo(time + "11:45:00") >= 0) {
-					System.out.println("実行しない");
+				if(record.compareTo(data + "114500") >= 0) {
+					System.out.println("2限実行しない");
 				}else {
 					if (dayOfWeek <= 6 && dayOfWeek >1){
 						for(int i = fre2;i < hikakufre2 ;i++)	{
 							status2 = "×";
 
 							fre2++;
-							jdbcTemplate.update("insert into kaisu (id,subjectid,subject,kaisu,status) value (?,?,?,?)", id, sbid2,sb2,fre2, status2);
+							jdbcTemplate.update("insert into kaisu (id,subjectid,subject,frequency,status) value (?,?,?,?,?)", id, sbid2,sb2,fre2, status2);
 						}
 
 
-						if(stack == 4) {
-							
+						if(stack == 0 && count2 <= 0) {
+							System.out.println("2限出席");
 							fre2++;
+							
 							stack = 2;
 						}
 						System.out.println(fre2 );
@@ -294,21 +320,22 @@ public class HomeController {
 		TimerTask task3 = new TimerTask() {
 			@Override
 			public void run() {
-				if(record.compareTo(time + "14:15:00") >= 0) {
-					System.out.println("実行しない");
+				if(record.compareTo(data + "151500") >= 0) {
+					System.out.println("3限実行しない");
 				}else {
 					if (dayOfWeek <= 6 && dayOfWeek >1){
 						for(int i = fre3;i < hikakufre3 ;i++)	{
 							status3 = "×";
 
 							fre3++;
-							jdbcTemplate.update("insert into kaisu (id,subjectid,subject,kaisu,status) value (?,?,?,?)", id, sbid3,sb3,fre3, status3);
+							jdbcTemplate.update("insert into kaisu (id,subjectid,subject,frequency,status) value (?,?,?,?,?)", id, sbid3,sb3,fre3, status3);
 						}
 
 
-						if(stack == 5) {
-							
+						if(stack == 0 && count3 <= 0) {
+							System.out.println("3限出席");
 							fre3++;
+							
 							stack = 3;
 						}
 						System.out.println(fre3 );
@@ -341,50 +368,63 @@ public class HomeController {
 	@RequestMapping(path = "/home", method = RequestMethod.POST)
 	public String postUpdStu(String latitude,String longitude,String accuracy,HttpServletRequest request, Integer frequency,String subject,String status, HttpSession session, Model model) {
 
-		String userid = (String) session.getAttribute("userId");
+		String id = (String) session.getAttribute("userId");
 		///東経140.111244の誤差が0.002、北緯35.6302573の誤差が0.002以内だった場合は実行
 		if(Double.parseDouble(longitude) >= 140.109244 && Double.parseDouble(longitude) <= 140.113244 && Double.parseDouble(latitude) >= 35.6282573 && Double.parseDouble(latitude) <= 35.6322573) {
 			status = "〇";
 
 			switch(stack){
 			case 1:
-				jdbcTemplate.update("insert into kaisu (id,subjectid,subject,kaisu,status) value (?,?,?,?)", id, sbid,sb,fre, status);
-				stack = 4;
+				count++;
+				System.out.println("1限実行");
+				System.out.println(fre);
+				jdbcTemplate.update("insert into kaisu(id,subjectid,subject,frequency,status) value (?,?,?,?,?)",id, sbid,sb,fre,status);
+				stack = 0;
+				
 				break;
 			case 2:
-				jdbcTemplate.update("insert into kaisu (id,subjectid,subject,kaisu,status) value (?,?,?,?)", id, sbid2,sb2,fre2, status2);
-				stack = 5;
+				count2++;
+				System.out.println("2限実行");
+				System.out.println(fre2);
+				jdbcTemplate.update("insert into kaisu(id,subjectid,subject,frequency,status) value (?,?,?,?,?)", id, sbid2,sb2,fre2, status2);
+				stack = 0;
+				
 				break;
 			case 3:
-				jdbcTemplate.update("insert into kaisu (id,subjectid,subject,kaisu,status) value (?,?,?,?)", id, sbid3,sb3,fre3, status3);
+				count3++;
+				System.out.println("3限実行");
+				System.out.println(fre3);
+				jdbcTemplate.update("insert into kaisu(id,subjectid,subject,frequency,status) value (?,?,?,?,?)", id, sbid3,sb3,fre3, status3);
+				
+				stack = 0;
 				break;
 			}
 		}
 
 		System.out.println(record);
-		System.out.println(accuracy);
+		System.out.println(stack);
 		System.out.println("北緯"+latitude);
 		System.out.println("東経 "+longitude);
 
 
-		System.out.println(userid);
+		
 		System.out.println(sbid);
 		System.out.println(fre);
 		System.out.println(status);
 
-		System.out.println(userid);
+		
 		System.out.println(sbid2);
 		System.out.println(fre2);
 		System.out.println(status2);
 
 
-		System.out.println(userid);
+		
 		System.out.println(sbid3);
 		System.out.println(fre3);
 		System.out.println(status3);
 
 
-			  
+
 
 		return "redirect:/home";
 	}
@@ -405,7 +445,7 @@ public class HomeController {
 		//kaisuテーブルの科目名と授業回数をもとにステータスを変える
 		jdbcTemplate.update("UPDATE kaisu SET status = ? WHERE id = ? AND subject = ? AND frequency = ?",id,status,subject,frequency);
 
-		
+
 
 		return "redirect:/home";
 	}

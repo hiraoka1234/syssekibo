@@ -33,11 +33,7 @@ public class Syussekibo {
 	@Column(name = "frequency")
 	private String frequency;
 
-	@Column(name = "career")
-	private String career;
 
-	@Column(name = "scareer")
-	private String scareer;
 	
 
 
@@ -75,21 +71,7 @@ public class Syussekibo {
 		this.frequency = frequency;
 	}
 
-	public String getCareer() {
-		return career;
-	}
 
-	public void setCareer(String career) {
-		this.career = career;
-	}
-
-	public String getScareer() {
-		return scareer;
-	}
-
-	public void setScareer(String scareer) {
-		this.scareer = scareer;
-	}
 
 	public int getId() {
 		return id;

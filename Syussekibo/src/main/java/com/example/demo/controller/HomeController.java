@@ -65,6 +65,12 @@ public class HomeController {
 
 	@RequestMapping(path = "/home", method = RequestMethod.GET)
 	public String viewPage(HttpServletRequest request,Model model, HttpSession session)throws ParseException {
+		
+		if (session.getAttribute("userId") == null) {
+			return "redirect:/stulogin";
+			
+		}
+		
 		String id = (String) session.getAttribute("userId");
 
 		// ユーザーがSearchControllerから来たかどうかを確認
@@ -188,8 +194,6 @@ public class HomeController {
 			break;  
 		}
 
-
-
 		///ここまでが曜日取得プログラム
 
 		///ここから定期実行一限目
@@ -221,9 +225,9 @@ public class HomeController {
 					fre = (int) tuikaList.get(0).get("fre");
 					fre2 = (int) tuikaList2.get(0).get("fre2");
 					fre3 = (int) tuikaList3.get(0).get("fre3");
-					hikakufre =  (int) hikakuList.get(0).get("hikakuList");
-					hikakufre2 = (int) hikakuList2.get(0).get("hikakuList2");
-					hikakufre3 = (int) hikakuList3.get(0).get("hikakuList3");
+					hikakufre =  (int) hikakuList.get(0).get("hikakufre");
+					hikakufre2 = (int) hikakuList2.get(0).get("hikakufre2");
+					hikakufre3 = (int) hikakuList3.get(0).get("hikakufre3");
 					
 
 					
@@ -320,7 +324,7 @@ public class HomeController {
 		TimerTask task3 = new TimerTask() {
 			@Override
 			public void run() {
-				if(record.compareTo(data + "151500") >= 0) {
+				if(record.compareTo(data + "141500") >= 0) {
 					System.out.println("3限実行しない");
 				}else {
 					if (dayOfWeek <= 6 && dayOfWeek >1){

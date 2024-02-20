@@ -24,18 +24,11 @@
 	
 	
     </div>
-
-	
-
-
 	<script src="geolocation.js"></script>
-
 	<script type="text/javascript">
 		if (navigator.geolocation) {
-
 			// 現在の位置情報を取得
 			navigator.geolocation.getCurrentPosition(
-
 				// （1）位置情報の取得に成功した場合
 				function (pos) {
 					var location = "<li>" + "緯度：" + pos.coords.latitude + "</li>";
@@ -79,8 +72,9 @@
 						<li class="sp-menu__item"><a class="sp-menu__link" href="./home">Home</a></li>
 						<li class="sp-menu__item"><a class="sp-menu__link" href="./stulogin">ログイン</a></li>
 						<li class="sp-menu__item"><a class="sp-menu__link" href="./touroku">新規登録</a></li>
-    					<li class="sp-menu__item"><a class="sp-menu__link" th:if="${showBackButton}" href="./search">検索</a></li>
 						<li class="sp-menu__item"><a class="sp-menu__link" href="./teacherlogin">教師用ログイン</a></li>
+    					<li class="sp-menu__item"><a class="sp-menu__link" th:if="${showBackButton}" href="./search">検索</a></li>
+						
 					</ul>
 				</div>
 			</th:block>
@@ -94,8 +88,9 @@
 						<li class="sp-menu__item"><a class="sp-menu__link" href="./home">Home</a></li>
 						<li class="sp-menu__item"><a class="sp-menu__link" href="./stulogin">ログイン</a></li>
 						<li class="sp-menu__item"><a class="sp-menu__link" href="./touroku">新規登録</a></li>
-    					<li class="sp-menu__item"><a class="sp-menu__link" th:if="${showBackButton}" href="./search">検索</a></li>
 						<li class="sp-menu__item"><a class="sp-menu__link" href="./teacherlogin">教師用ログイン</a></li>
+    					<li class="sp-menu__item"><a class="sp-menu__link" th:if="${showBackButton}" href="./search">検索</a></li>
+						
 					</ul>
 				</div>
 			</th:block>
@@ -144,7 +139,7 @@
 
 
 		
-		<form th:action="@{/home}" method="post" class="text-center">
+		<form th:action="@{/home/teacher}" method="post" class="text-center">
 			
 
     <div style="display: flex; justify-content: center;">
@@ -153,9 +148,9 @@
     </div>
 	
 	<select name = "status" th:if="${showBackButton}">
-    	<option value="" id="status" name="status" th:if="${showBackButton}" placeholder="ステータス" /></option><br>
+    	<option value="〇" id="status" name="status" th:if="${showBackButton}" placeholder="ステータス" />〇</option><br>
     	<option value="×" th:if="${showBackButton}">×</option>
-    	<option value="〇" th:if="${showBackButton}">〇</option>
+    	
 	</select>
     
     <div class="text-center">

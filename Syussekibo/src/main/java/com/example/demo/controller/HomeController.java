@@ -49,7 +49,7 @@ public class HomeController {
 	private int hikakufre;
 	private int hikakufre2;
 	private int hikakufre3;;
-	private int stack = 0;
+	private int stack;
 	private int count = 0;
 	private int count2 = 0;
 	private int count3 = 0;
@@ -59,18 +59,18 @@ public class HomeController {
 	private String status = "×";
 	private String status2 = "×";
 	private String status3 = "×";
-	
+
 
 
 
 	@RequestMapping(path = "/home", method = RequestMethod.GET)
 	public String viewPage(HttpServletRequest request,Model model, HttpSession session)throws ParseException {
-		
+
 		if (session.getAttribute("userId") == null) {
 			return "redirect:/stulogin";
-			
+
 		}
-		
+
 		String id = (String) session.getAttribute("userId");
 
 		// ユーザーがSearchControllerから来たかどうかを確認
@@ -103,20 +103,30 @@ public class HomeController {
 		List<Map<String, Object>> kamokuList = jdbcTemplate.queryForList("SELECT  DISTINCT subjectid,subject FROM kamoku ");
 		model.addAttribute("selectResult2", kamokuList);
 
-		List<Map<String, Object>> kaisuList = jdbcTemplate.queryForList("SELECT DISTINCT id, frequency FROM kaisu ORDER BY frequency ASC;");
+		List<Map<String, Object>> kaisuList = jdbcTemplate.queryForList("SELECT DISTINCT frequency FROM kaisu ORDER BY frequency ASC;");
 		model.addAttribute("selectResult3", kaisuList);
 
-		int lastFrencency = (int) kaisuList.get(kaisuList.size()-1).get("frequency");
-		Map<String, String[]> resultMap = new HashMap<>();
-		resultList.forEach((row) -> {
-			if (!resultMap.containsKey(row.get("subject"))) {
-				resultMap.put((String)row.get("subject"), new String[lastFrencency]);
-			}
-			String[] statusArr = resultMap.get(row.get("subject"));
-			statusArr[(int)row.get("frequency")-1] = (String)row.get("status");
-		});
-		model.addAttribute("data", resultMap);
+		//科目ごとの出席状況を取得
+		//resultListが空じゃない場合は実行しない
+		
 
+		Integer frequencyObjForKaisuList = (Integer)kaisuList.get(kaisuList.size()-1).get("frequency");
+		int lastFrencency = (frequencyObjForKaisuList != null) ? frequencyObjForKaisuList : 0;
+
+			Map<String, String[]> resultMap = new HashMap<>();
+			resultList.forEach((row) -> {
+				if (!resultMap.containsKey(row.get("subject"))) {
+					resultMap.put((String)row.get("subject"), new String[lastFrencency]);
+				}
+				String[] statusArr = resultMap.get(row.get("subject"));
+				Integer frequencyObjForResultList = (Integer)row.get("frequency");
+				if (frequencyObjForResultList != null) {
+					statusArr[frequencyObjForResultList - 1] = (String)row.get("status");
+				}
+
+			});
+			model.addAttribute("data", resultMap);
+		
 
 
 		///ここからが曜日取得プログラム
@@ -137,7 +147,9 @@ public class HomeController {
 		String[] weekDays = {"", "日", "月", "火", "水", "木", "金", "土"};
 		System.out.println("今日は" + dayOfWeek + "曜日です。");
 		System.out.println("今日は" + weekDays[dayOfWeek] + "曜日です。");
-
+		
+		
+		
 
 
 
@@ -204,8 +216,7 @@ public class HomeController {
 			@Override
 			public void run() {
 				if (dayOfWeek <= 6 && dayOfWeek >1){
-					List<Map<String, Object>> tuikaList = jdbcTemplate.queryForList("SELECT id, subjectid, MAX(frequency) AS fre FROM kaisu WHERE id = ? AND subjectid = ?;",id,sbid);
-					model.addAttribute("tuikaList",tuikaList);
+					
 					List<Map<String, Object>> tuikaList2 = jdbcTemplate.queryForList("SELECT id, subjectid, MAX(frequency) AS fre2 FROM kaisu WHERE id = ? and subjectid = ?;",id,sbid2);
 					model.addAttribute("tuikaList2",tuikaList2);
 					List<Map<String, Object>> tuikaList3 = jdbcTemplate.queryForList("SELECT id, subjectid, MAX(frequency) AS fre3 FROM kaisu WHERE id = ? and subjectid = ?;",id,sbid3);
@@ -216,27 +227,40 @@ public class HomeController {
 					model.addAttribute("hikakuList2",hikakuList2);
 					List<Map<String, Object>> hikakuList3 = jdbcTemplate.queryForList("SELECT subjectid, MAX(frequency) AS hikakufre3 FROM kaisu WHERE subjectid = ?;",sbid3);
 					model.addAttribute("hikakuList3",hikakuList3);
-					System.out.println(tuikaList.get(0).get("fre") );
+					
 					System.out.println(tuikaList2.get(0).get("fre2")  );
 					System.out.println(tuikaList3.get(0).get("fre3")  );
-					System.out.println(hikakuList.get(0).get("hikakufre")  );
+					
 					System.out.println(hikakuList2.get(0).get("hikakufre2")  );
 					System.out.println(hikakuList3.get(0).get("hikakufre3")  );
+					if (dayOfWeek != 3){
+						
+					List<Map<String, Object>> tuikaList = jdbcTemplate.queryForList("SELECT id, subjectid, MAX(frequency) AS fre FROM kaisu WHERE id = ? AND subjectid = ?;",id,sbid);
+					model.addAttribute("tuikaList",tuikaList);
+					
+					System.out.println(tuikaList.get(0).get("fre") );
+					
 					fre = (int) tuikaList.get(0).get("fre");
+					hikakufre =  (int) hikakuList.get(0).get("hikakufre");
+					}else {
+						System.out.println("1限はありません");
+					}
 					fre2 = (int) tuikaList2.get(0).get("fre2");
 					fre3 = (int) tuikaList3.get(0).get("fre3");
-					hikakufre =  (int) hikakuList.get(0).get("hikakufre");
 					hikakufre2 = (int) hikakuList2.get(0).get("hikakufre2");
 					hikakufre3 = (int) hikakuList3.get(0).get("hikakufre3");
 					
-
 					
+					
+
 				}
 				//10時より前の時間だったら実行
+				
 				if(record.compareTo(data + "100000") >= 0) {
 					System.out.println("1限実行しない");
 				}else {
-					if (dayOfWeek <= 6 && dayOfWeek >1){
+					if (dayOfWeek <= 6 && dayOfWeek >1 && dayOfWeek != 3){
+						
 
 						for(int i = fre;i < hikakufre ;i++)	{
 							status = "×";
@@ -251,10 +275,12 @@ public class HomeController {
 					if(stack == 0 && count == 0) {
 						System.out.println("1限出席");
 						fre++;
-						
-						stack = 1;
-					}
 
+						stack = 1;
+						//tuikaListが空だったら実行しない
+						
+					}
+					
 					System.out.println("実行済み");
 					System.out.println(fre );
 					System.out.println(id );
@@ -268,7 +294,7 @@ public class HomeController {
 
 					timer.cancel();
 				}
-			}
+		}
 		};
 		timer.schedule(task, sdf.parse(time +" 09:25:00"));
 
@@ -298,7 +324,7 @@ public class HomeController {
 						if(stack == 0 && count2 <= 0) {
 							System.out.println("2限出席");
 							fre2++;
-							
+
 							stack = 2;
 						}
 						System.out.println(fre2 );
@@ -324,22 +350,22 @@ public class HomeController {
 		TimerTask task3 = new TimerTask() {
 			@Override
 			public void run() {
-				if(record.compareTo(data + "141500") >= 0) {
+				if(record.compareTo(data + "171500") >= 0) {
 					System.out.println("3限実行しない");
 				}else {
 					if (dayOfWeek <= 6 && dayOfWeek >1){
 						for(int i = fre3;i < hikakufre3 ;i++)	{
 							status3 = "×";
-
+							
 							fre3++;
 							jdbcTemplate.update("insert into kaisu (id,subjectid,subject,frequency,status) value (?,?,?,?,?)", id, sbid3,sb3,fre3, status3);
 						}
 
-
+							
 						if(stack == 0 && count3 <= 0) {
 							System.out.println("3限出席");
 							fre3++;
-							
+
 							stack = 3;
 						}
 						System.out.println(fre3 );
@@ -370,59 +396,82 @@ public class HomeController {
 
 	//出席するボタンを押したときに動く
 	@RequestMapping(path = "/home", method = RequestMethod.POST)
-	public String postUpdStu(String latitude,String longitude,String accuracy,HttpServletRequest request, Integer frequency,String subject,String status, HttpSession session, Model model) {
-
+	public String postUpdStu(String latitude,String longitude,HttpServletRequest request, Integer frequency,String subject,String status, HttpSession session, Model model) {
+		
 		String id = (String) session.getAttribute("userId");
+		//logintimdかlatitudeかlongitudeがnullだった場合は実行しない
+		if (latitude == null || longitude == null) {
+			return "redirect:/home";
+		}
 		///東経140.111244の誤差が0.002、北緯35.6302573の誤差が0.002以内だった場合は実行
 		if(Double.parseDouble(longitude) >= 140.109244 && Double.parseDouble(longitude) <= 140.113244 && Double.parseDouble(latitude) >= 35.6282573 && Double.parseDouble(latitude) <= 35.6322573) {
 			status = "〇";
-
+			
+			
 			switch(stack){
 			case 1:
-				count++;
+				if (count == 0) {
+					
+					
+					fre++;
+					jdbcTemplate.update("insert into kaisu(id,subjectid,subject,frequency,status) value (?,?,?,?,?)",id, sbid,sb,fre,status);
+					jdbcTemplate.update("insert into record(id,record,latitude,longitude) value (?,?,?,?)", id, record, latitude, longitude);
+					stack = 0;
+					count++;
+				}else {
+					System.out.println("1限実行済みです");
+				}
 				System.out.println("1限実行");
 				System.out.println(fre);
-				jdbcTemplate.update("insert into kaisu(id,subjectid,subject,frequency,status) value (?,?,?,?,?)",id, sbid,sb,fre,status);
-				stack = 0;
-				
 				break;
 			case 2:
-				count2++;
+				if (count2 == 0) {
+					
+					fre2++;
+					jdbcTemplate.update("insert into kaisu(id,subjectid,subject,frequency,status) value (?,?,?,?,?)", id, sbid2,sb2,fre2, status2);
+					jdbcTemplate.update("insert into record(id,record,latitude,longitude) value (?,?,?,?)", id, record, latitude, longitude);
+					stack = 0;
+					count2++;
+				}else {
+					System.out.println("2限実行済みです");
+				}
+				
 				System.out.println("2限実行");
 				System.out.println(fre2);
-				jdbcTemplate.update("insert into kaisu(id,subjectid,subject,frequency,status) value (?,?,?,?,?)", id, sbid2,sb2,fre2, status2);
-				stack = 0;
-				
 				break;
 			case 3:
-				count3++;
+				if (count3 == 0) {
+					
+					fre3++;
+					jdbcTemplate.update("insert into kaisu(id,subjectid,subject,frequency,status) value (?,?,?,?,?)", id, sbid3,sb3,fre3, status3);
+					jdbcTemplate.update("insert into record(id,record,latitude,longitude) value (?,?,?,?)", id, record, latitude, longitude);
+					stack = 0;
+					count3++;
+				}else {
+					System.out.println("3限実行済みです");
+				}
 				System.out.println("3限実行");
 				System.out.println(fre3);
-				jdbcTemplate.update("insert into kaisu(id,subjectid,subject,frequency,status) value (?,?,?,?,?)", id, sbid3,sb3,fre3, status3);
-				
-				stack = 0;
+				break;
+			default:
+				System.out.println("実行済みです");
 				break;
 			}
 		}
-
+		
 		System.out.println(record);
 		System.out.println(stack);
+		System.out.println(count);
+		System.out.println(count2);
+		System.out.println(count3);
 		System.out.println("北緯"+latitude);
 		System.out.println("東経 "+longitude);
-
-
-		
 		System.out.println(sbid);
 		System.out.println(fre);
 		System.out.println(status);
-
-		
 		System.out.println(sbid2);
 		System.out.println(fre2);
 		System.out.println(status2);
-
-
-		
 		System.out.println(sbid3);
 		System.out.println(fre3);
 		System.out.println(status3);
@@ -440,15 +489,18 @@ public class HomeController {
 	public String postUpd(String accuracy,HttpServletRequest request, Integer frequency,String subject,String status, HttpSession session, Model model) {
 
 		String id = (String) session.getAttribute("userId");
-
+		jdbcTemplate.update("update kaisu set status = ? where id = ? and subject = ? and frequency = ?",status,id,subject,frequency);
+		
+		
+		
 		System.out.println(id);
 		System.out.println(status);
 		System.out.println(subject);
 		System.out.println(frequency);
 
-		//kaisuテーブルの科目名と授業回数をもとにステータスを変える
-		jdbcTemplate.update("UPDATE kaisu SET status = ? WHERE id = ? AND subject = ? AND frequency = ?",id,status,subject,frequency);
-
+	    //kaisuテーブルの科目名と授業回数をもとにステータスを変える
+	  
+		
 
 
 		return "redirect:/home";
